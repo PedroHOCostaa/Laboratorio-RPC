@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package mflix;
+
+service Mflix {
+  rpc CriarFilme(Pedido) returns (Confirmacao) {}
+  rpc ReadFilme(Pedido) returns (Confirmacao) {}
+  rpc UpdateFilme(Pedido) returns (Confirmacao) {}
+  rpc DeleteFilme(Pedido) returns (Confirmacao) {}
+  rpc ListaFilmesAtor(Pedido) returns (Confirmacao) {}
+  rpc ListaFilmesGenero(Pedido) returns (Confirmacao) {}
+}
+
+
+message Filme {
+  string id = 1;                 // Identificador único do filme
+  string titulo = 2;             // Título do filme
+  repeated string diretores = 3; // Nome do diretor
+  int32 ano = 4;                 // Ano de lançamento
+  repeated string atores = 5;    // Lista de atores
+  repeated string generos = 6;   // Gênero do filme
+  int32 duracao = 7;             // Duração do filme em segundos 
+}
+
+message Filmes {
+  repeated Filme filmes = 1;
+}
+
+message Pedido {
+  int32 op = 1;
+  Filme filme = 2;
+  int32 func = 3;
+}
+
+message Confirmacao {
+  int32 resultado = 1;
+  Filme filme = 2;               // Para quando o retorno for de um único filme
+  repeated Filme filmes = 3;      // Para quando o retorno for de múltiplos filmes
+  int32 erro = 4;
+}
+
