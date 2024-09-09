@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class CarteiroStub(object):
+class GreeterStub(object):
     """The greeting service definition.
 
     """
@@ -37,18 +37,18 @@ class CarteiroStub(object):
             channel: A grpc.Channel.
         """
         self.CreateFilm = channel.unary_unary(
-                '/mflix.Carteiro/CreateFilm',
-                request_serializer=mflix__pb2.Pedido.SerializeToString,
-                response_deserializer=mflix__pb2.Confirmacao.FromString,
+                '/mflix.Greeter/CreateFilm',
+                request_serializer=mflix__pb2.Filme.SerializeToString,
+                response_deserializer=mflix__pb2.Filme.FromString,
                 _registered_method=True)
         self.ReadFilm = channel.unary_unary(
-                '/mflix.Carteiro/ReadFilm',
-                request_serializer=mflix__pb2.Pedido.SerializeToString,
-                response_deserializer=mflix__pb2.Confirmacao.FromString,
+                '/mflix.Greeter/ReadFilm',
+                request_serializer=mflix__pb2.Filme.SerializeToString,
+                response_deserializer=mflix__pb2.Filme.FromString,
                 _registered_method=True)
 
 
-class CarteiroServicer(object):
+class GreeterServicer(object):
     """The greeting service definition.
 
     """
@@ -68,27 +68,27 @@ class CarteiroServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_CarteiroServicer_to_server(servicer, server):
+def add_GreeterServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'CreateFilm': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateFilm,
-                    request_deserializer=mflix__pb2.Pedido.FromString,
-                    response_serializer=mflix__pb2.Confirmacao.SerializeToString,
+                    request_deserializer=mflix__pb2.Filme.FromString,
+                    response_serializer=mflix__pb2.Filme.SerializeToString,
             ),
             'ReadFilm': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadFilm,
-                    request_deserializer=mflix__pb2.Pedido.FromString,
-                    response_serializer=mflix__pb2.Confirmacao.SerializeToString,
+                    request_deserializer=mflix__pb2.Filme.FromString,
+                    response_serializer=mflix__pb2.Filme.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'mflix.Carteiro', rpc_method_handlers)
+            'mflix.Greeter', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('mflix.Carteiro', rpc_method_handlers)
+    server.add_registered_method_handlers('mflix.Greeter', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class Carteiro(object):
+class Greeter(object):
     """The greeting service definition.
 
     """
@@ -107,9 +107,9 @@ class Carteiro(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/mflix.Carteiro/CreateFilm',
-            mflix__pb2.Pedido.SerializeToString,
-            mflix__pb2.Confirmacao.FromString,
+            '/mflix.Greeter/CreateFilm',
+            mflix__pb2.Filme.SerializeToString,
+            mflix__pb2.Filme.FromString,
             options,
             channel_credentials,
             insecure,
@@ -134,9 +134,9 @@ class Carteiro(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/mflix.Carteiro/ReadFilm',
-            mflix__pb2.Pedido.SerializeToString,
-            mflix__pb2.Confirmacao.FromString,
+            '/mflix.Greeter/ReadFilm',
+            mflix__pb2.Filme.SerializeToString,
+            mflix__pb2.Filme.FromString,
             options,
             channel_credentials,
             insecure,

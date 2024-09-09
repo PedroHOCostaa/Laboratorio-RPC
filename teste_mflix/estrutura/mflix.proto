@@ -4,12 +4,12 @@ package mflix;
 
 // The greeting service definition.
 
-service Carteiro {
+service Greeter {
   // Create a Film
-  rpc CreateFilm (Pedido) returns (Confirmacao) {}
+  rpc CreateFilm (Filme) returns (Filme) {}
 
   // Read a Film
-  rpc ReadFilm (Pedido) returns (Confirmacao) {}
+  rpc ReadFilm (Filme) returns (Filme) {}
   
 }
 
