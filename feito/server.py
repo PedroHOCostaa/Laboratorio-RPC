@@ -15,8 +15,8 @@ class BancoDeDados:
             return False
 
     def read(self, filme):
-        erro = 0
-        print("Criando filme" + filme.titulo)
+        erro = 1
+        print("Lendo filme" + filme.titulo)
         if erro == 0:
             return True
         else:
@@ -24,7 +24,7 @@ class BancoDeDados:
 
     def update(self, filme):
         erro = 0
-        print("Criando filme" + filme.titulo)
+        print("Atualizando filme" + filme.titulo)
         if erro == 0:
             return True
         else:
@@ -32,7 +32,7 @@ class BancoDeDados:
 
     def delete(self, filme):
         erro = 0
-        print("Criando filme" + filme.titulo)
+        print("Deletando filme" + filme.titulo)
         if erro == 0:
             return True
         else:
@@ -103,7 +103,7 @@ class Mflix(mflix_pb2_grpc.MflixServicer):
             confirmacao.resultado = 0
         else:
             filme_lido = banco_de_dados.read(request.filme)
-            if filme_lido is None:
+            if filme_lido is False:
                 confirmacao.resultado = 0
                 confirmacao.erro = 9  # Erro ao ler o filme 
             else:   
