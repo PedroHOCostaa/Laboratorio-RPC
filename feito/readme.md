@@ -20,29 +20,42 @@ Para instalar os pacotes necessários, execute os seguintes comandos:
     gem install grpc-tools
 ```
 
-### Executando a aplicação
+## Como executar
 
-python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./mflix.proto
+Para executar a aplicação abra o terminal e aplique os seguintes comandos:
 
-grpc_tools_ruby_protoc -I. --ruby_out=. --grpc_out=. ./estrutura/mflix.proto
+``` bash
 
-utilize o seguinte comando:
-python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./mflix.proto
+    python server.py
+    ruby cliente.rb
+    
+```
 
-Explicação do comando :
-depois de -I coloque o caminho relativo para o para o codigo .proto que você quer compilar : ./estrutura
-depois de --python_out= coloque o caminho para a estrutura protoc ser criada :  ./
-depois de grpc_python_out= coloque o caminho para a estrutura grpc ser criada :  ./
-Após isto caminho .proto com o codigo no final : ./estrutura/mflix.proto
+Selecione as opções que estão disponíveis no terminal cliente.
 
-Para ruby com gRPC siga os seguintes passos:
+## Funcionamento
 
-utilize o seguinte comando:
-grpc_tools_ruby_protoc -I. --ruby_out=. --grpc_out=. ./mflix.proto
-depois de -I coloque o caminho relativo para o para o codigo .proto que você quer compilar : ./estrutura
-depois de --ruby_out= coloque o caminho para a estrutura protoc ser criada :  ./
-depois de grpc_out= coloque o caminho para a estrutura grpc ser criada :  ./
-Após isto caminho .proto com o codigo no final : ./estrutura/mflix.proto
+A aplicação é dividida em duas partes principais de execução: o servidor e o cliente.
 
-para utiizar o codigo sera necessarios os seguintes pacote python: grpcio e grpcio-tools
-para utiizar o codigo sera necessarios os seguintes pacote ruby: grpc e grpc-tools
+### Servidor
+
+O servidor é desenvolvido em Python e utiliza gRPC para fornecer uma interface para as operações de CRUD no banco de dados MongoDB. Ele é responsável por:
+
+- **Receber e Processar Solicitações**: O servidor escuta requisições do cliente e processa operações como criação, leitura, atualização e deleção de filmes no banco;de dados;
+- **Comunicação via gRPC**: Utiliza o protocolo gRPC para comunicação com o cliente, o que permite uma comunicação eficiente e estruturada entre o servidor e o cliente;
+
+### Cliente
+
+O cliente é desenvolvido em Ruby e interage com o servidor para realizar as operações desejadas. Ele realiza as seguintes tarefas:
+
+- **Solicitação de Operações**: O cliente apresenta ao usuário uma interface para selecionar uma das operações disponíveis, como criar, ler, atualizar ou deletar um filme;
+- **Comunicação via gRPC**: Envia solicitações para o servidor usando gRPC e recebe respostas.
+
+
+## Tecnologias utilizadas
+
+- **gRPC**: Framework para chamadas de procedimentos remotos (RPC) que utiliza Protocol Buffers para definição e troca de mensagens;
+- **Ruby**: Linguagem de programação utilizada para implementar o cliente;
+- **Python**: Linguagem de programação utilizada para implementar o servidor;
+- **MongoDB**: Banco de dados NoSQL utilizado para armazenar as informações dos filmes.
+- 
