@@ -1,4 +1,30 @@
-Para o python com gRPC siga os seguintes passos:
+# Projeto de Desenvolvimento em Representação Externa de Dados utilizando gRPC
+
+## Instalação dos Pacotes
+
+Para instalar os pacotes necessários, execute os seguintes comandos:
+
+1. **Python**:
+
+``` bash
+   pip install grpcio
+
+   pip install grpcio-tools
+
+```
+
+2. **Ruby**:
+
+``` bash
+    gem install grpc
+    gem install grpc-tools
+```
+
+### Executando a aplicação
+
+python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./mflix.proto
+
+grpc_tools_ruby_protoc -I. --ruby_out=. --grpc_out=. ./estrutura/mflix.proto
 
 utilize o seguinte comando:
 python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./mflix.proto

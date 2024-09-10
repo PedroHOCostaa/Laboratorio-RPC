@@ -1,16 +1,19 @@
-this_dir = File.expand_path(File.dirname(__FILE__))
-lib_dir = File.join(this_dir, 'lib')
-$LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
+# Autores: Marcos Bezner Rampaso e Pedro Henrique de Oliveira Costa
+# Data: 10/09/2024
+# Descrição: cliente que se comunica com o servidor para criar, ler, atualizar e deletar filmes, além de buscar filmes por atores e gêneros.
 
+this_dir = File.expand_path(File.dirname(__FILE__)) # Diretório atual
+lib_dir = File.join(this_dir, 'lib') # Diretório da biblioteca
+$LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir) # Adiciona o diretório da biblioteca ao PATH
 
-require 'grpc'
-require 'mflix_services_pb'
+require 'grpc' # Importa a biblioteca gRPC
+require 'mflix_services_pb' # Importa o arquivo gerado pelo protoc
 
 def main
-  hostname = 'localhost:50051'
-  puts "Digite o nome do usuário:"
-  stub = Mflix::Mflix::Stub.new(hostname, :this_channel_is_insecure)
-  conexao = 1
+  hostname = 'localhost:50051' # Endereço do servidor
+  puts "Digite o nome do usuário:" 
+  stub = Mflix::Mflix::Stub.new(hostname, :this_channel_is_insecure) # Cria um stub para se comunicar com o servidor
+  conexao = 1 # Variável para manter a conexão com o servidor
   while conexao == 1
     pedido = Mflix::Pedido.new # Cria um novo pedido
     pedido.filme = Mflix::Filme.new # Cria um novo filme
@@ -46,14 +49,13 @@ def main
       end
       puts "Digite a duração do filme: "
       pedido.filme.duracao = gets.chomp.to_i
-      confirmacao = stub.criar_filme(pedido)
-
+      confirmacao = stub.criar_filme(pedido) # Envia o pedido para o servidor
 
     when 2  # Read
       puts "Digite o id do filme que será lido: "
       pedido.filme.id = gets.chomp
-      confirmacao = stub.read_filme(pedido)
-  
+      confirmacao = stub.read_filme(pedido) # Envia o pedido para o servidor
+   
     when 3  # Update  
       # Solicita o ID do filme que será atualizado
       puts "Digite o id do filme que será atualizado: "
@@ -119,7 +121,7 @@ def main
       puts "Digite o nome do ator: "
       ator = gets.chomp 
       pedido.filme.atores.push(ator)
-      confirmacao = stub.lists_filme_genero(pedido)
+      confirmacao = stub.lista_filmes_ator(pedido)
       
     when 7 # Buscar por generos
       pedido.filme.id = ""  # Garantir que o ID está vazio para busca por generos
@@ -127,7 +129,23 @@ def main
       puts "Digite o nome do genero: "
       genero = gets.chomp
       pedido.filme.generos.push(genero)
-      confirmacao = stub.lists_filme_ator(pedido)
+      confirmacao = stub.lista_filmes_genero(pedido)
+    
+      if confirmacao.resultado == 7
+        puts "Filmes encontrados:"
+        confirmacao.filmes.each do |filme|
+          puts "ID: #{filme.id}"
+          puts "Título: #{filme.titulo}"
+          puts "Diretores: #{filme.diretores.join(', ')}"
+          puts "Atores: #{filme.atores.join(', ')}"
+          puts "Gêneros: #{filme.generos.join(', ')}"
+          puts "Duração: #{filme.duracao} minutos"
+          puts "Ano: #{filme.ano}"
+          puts "-" * 20
+        end
+      else
+        puts "Nenhum filme encontrado ou erro na busca."
+      end
     else
       puts "Opção inválida"
       pedido.op = 0
